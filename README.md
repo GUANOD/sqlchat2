@@ -1,6 +1,6 @@
 # sqlchat2
 
-Resume development and migration to Typescript of live chat Express app
+Resume development and migration to Typescript of live chat Express/React app
 
 ---
 
