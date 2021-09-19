@@ -4,7 +4,7 @@ Resume development and migration to Typescript of live chat Express app
 
 ---
 
-*-NodeJs ( express )
--Typescript
--Socket.io
--JWT *
+-*NodeJs ( express ) *
+-*Typescript*
+-*Socket.io*
+-*JWT *
