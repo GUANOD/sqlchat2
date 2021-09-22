@@ -1,5 +1,5 @@
-import { NextFunction, Response } from "express";
-import { IGetUserAuthInfoRequest as Request } from "../../models/IGetUserAuthInfoRequest.ts";
+import { NextFunction, Response, Request } from "express";
+// import { IGetUserAuthInfoRequest as Request } from "../../models/IGetUserAuthInfoRequest";
 const jwt = require("jsonwebtoken"); // ¯\_(ツ)_/¯
 
 export function verifyTokenHttp(

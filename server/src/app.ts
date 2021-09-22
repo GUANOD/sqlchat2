@@ -1,3 +1,4 @@
+require("dotenv").config();
 import app from "./config/appConfig";
 import chatRoute from "./routes/chatRoute";
 import connexionRoute from "./routes/connexionRoute";
