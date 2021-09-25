@@ -1,14 +1,14 @@
 import { v4 as uuidv4 } from "uuid";
 
 export class User {
-  private _id: string;
+  private _id!: string;
   private _username: string;
   private _password: string;
 
-  constructor(username: string, password: string) {
+  constructor(username: string, password: string, id: string = uuidv4()) {
     this._username = username;
     this._password = password;
-    this._id = uuidv4();
+    this._id = id;
   }
 
   public get getId() {
@@ -21,10 +21,6 @@ export class User {
 
   public get getPassword() {
     return this._password;
-  }
-
-  public set setId(id: string) {
-    this._id = id;
   }
 
   public set setUsername(username: string) {

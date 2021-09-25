@@ -1,5 +1,4 @@
 import { NextFunction, Response, Request } from "express";
-// import { IGetUserAuthInfoRequest as Request } from "../../models/IGetUserAuthInfoRequest";
 const jwt = require("jsonwebtoken"); // ¯\_(ツ)_/¯
 
 export function verifyTokenHttp(
@@ -7,7 +6,7 @@ export function verifyTokenHttp(
   res: Response,
   next: NextFunction
 ) {
-  const bearerHeader = req.headers["auth-token"];
+  const bearerHeader = req.cookies.token;
   const token = bearerHeader && (<string>bearerHeader).split(" ")[1];
   if (token == null) return res.sendStatus(401);
 
@@ -18,7 +17,7 @@ export function verifyTokenHttp(
       if (err) {
         res.status(403).send({ res: "Unauthorized" });
       } else {
-        req.user = user;
+        req.user = user.user;
         console.log("verified");
       }
     }
