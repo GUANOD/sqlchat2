@@ -7,7 +7,8 @@ import jwt from "jsonwebtoken";
 
 // LOGIN ROUTE
 
-router.get("/", async (req: Request, res: Response) => {
+// needs req.body.username and req.body.password
+router.post("/", async (req: Request, res: Response) => {
   try {
     if (!req.body.username) {
       throw new Error("Username cannot be empty");
@@ -36,8 +37,10 @@ router.get("/", async (req: Request, res: Response) => {
     const token: string = jwt.sign(
       { user: searchResult[0].id },
       `${process.env.ACCESS_TOKEN_SECRET}`,
-      { expiresIn: "24h" }
+      { expiresIn: "1m" }
     );
+
+    //TODO: REFRESH TOKENS
 
     res.cookie("token", `bearer ${token}`, { httpOnly: true });
     res.send({ res: "Sent token" });
@@ -48,7 +51,8 @@ router.get("/", async (req: Request, res: Response) => {
 
 //SUB ROUTE
 
-router.get("/sub", async (req: Request, res: Response) => {
+// needs req.body.username and req.body.password
+router.post("/sub", async (req: Request, res: Response) => {
   try {
     if (!req.body.username) {
       throw new Error("Username cannot be empty");

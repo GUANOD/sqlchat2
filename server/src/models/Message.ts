@@ -1,13 +1,18 @@
-class Message {
+export class Message {
   private _chat: string;
-  private _senderID: string;
-  private _receiverID: string;
-  private _date: Date;
+  private _sender_ID: string;
+  private _receiver_ID: string;
+  private _date: string;
 
-  constructor(chat: string, senderID: string, receiverID: string, date: Date) {
+  constructor(
+    chat: string,
+    senderID: string,
+    receiverID: string,
+    date: string
+  ) {
     this._chat = chat;
-    this._senderID = senderID;
-    this._receiverID = receiverID;
+    this._sender_ID = senderID;
+    this._receiver_ID = receiverID;
     this._date = date;
   }
 
@@ -15,15 +20,15 @@ class Message {
     return this._chat;
   }
 
-  public get senderID(): string {
-    return this._senderID;
+  public get sender_ID(): string {
+    return this._sender_ID;
   }
 
-  public get receiverID(): string {
-    return this._receiverID;
+  public get receiver_ID(): string {
+    return this._receiver_ID;
   }
 
-  public get date(): Date {
+  public get date(): string {
     return this._date;
   }
 }

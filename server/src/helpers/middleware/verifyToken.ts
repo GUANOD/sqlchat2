@@ -8,8 +8,8 @@ export function verifyTokenHttp(
 ) {
   const bearerHeader = req.cookies.token;
   const token = bearerHeader && (<string>bearerHeader).split(" ")[1];
-  if (token == null) return res.sendStatus(401);
-
+  if (token == null) return res.sendStatus(401).send({ res: "Unauthorized" });
+  console.log(token);
   jwt.verify(
     token,
     process.env.ACCESS_TOKEN_SECRET,
@@ -19,10 +19,11 @@ export function verifyTokenHttp(
       } else {
         req.user = user.user;
         console.log("verified");
+        console.log("going next");
+        next();
       }
     }
   );
-  next();
 }
 
 export function verifyTokenSocket(socket: any, next: NextFunction) {

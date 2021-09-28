@@ -1,33 +1,38 @@
 import express, { Response, Request } from "express";
-import { searchUserById, updateUserName } from "../api/userDb";
+import { searchUserById, updatePassword, updateUserName } from "../api/userDb";
 import { verifyTokenHttp } from "../helpers/middleware/verifyToken";
-import { User } from "../models/User";
 import bcrypt from "bcrypt";
 const router = express.Router();
 
-router.get("/", verifyTokenHttp, async (req: Request, res: Response) => {
+//Change password or username
+
+// needs req.body.action ("updateUsername" or "updatePassword") and req.body.newUsername or req.body.newUsername
+router.post("/", verifyTokenHttp, async (req: Request, res: Response) => {
   try {
     if (!req.body.action) throw new Error("Select what to do.");
 
     switch (req.body.action) {
       case "updateUsername":
+        if (!req.body.newUsername)
+          throw new Error("Please provide new username.");
+
         await updateUserName(req.body.newUsername, req.user);
+
         res.send({ res: "Successful" });
         break;
+
       case "updatePassword":
-        const userResult: any = await searchUserById(req.user);
-        if (!userResult.length) throw new Error("User not found");
+        if (!req.body.newPassword)
+          throw new Error("Please provide new password.");
 
-        const correct: boolean = await bcrypt.compare(
-          req.body.password,
-          userResult[0].id
-        );
-        if (!correct) throw new Error("Password is wrong");
+        const hashed = await bcrypt.hash(req.body.newPassword, 12);
+        await updatePassword(hashed, req.user);
 
-        // TODO: CHANGE PASSWORD IN USERBD.TS
+        res.send({ res: "Successful" });
+
         break;
       default:
-        res.send({ res: "Could understand what to do." });
+        res.send({ res: "Could not understand what to do." });
     }
   } catch (error: any) {
     console.log("sending error");

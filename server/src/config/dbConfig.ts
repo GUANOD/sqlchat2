@@ -1,4 +1,3 @@
-import { connect } from "http2";
 import { Connection } from "mysql";
 
 const mysql = require("mysql");
@@ -14,7 +13,8 @@ const Connect = async () =>
 
     connection.connect((err: Error) => {
       if (err) {
-        reject(err);
+        console.error(err);
+        reject({ message: "Database error" });
         return;
       }
       console.log("db connected");
@@ -35,20 +35,24 @@ const Query = async (connection: Connection, query: string) =>
   });
 
 const getResults = (query: string, resolve: any, reject: any) => {
-  Connect().then((connection) => {
-    Query(connection, query)
-      .then((results) => {
-        resolve(results);
-      })
-      .catch((error) => {
-        reject(error);
-        return;
-      })
-      .finally(() => {
-        console.log("terminating connection");
-        connection.end();
-      });
-  });
+  Connect()
+    .then((connection) => {
+      Query(connection, query)
+        .then((results) => {
+          resolve(results);
+        })
+        .catch((error) => {
+          reject(error);
+          return;
+        })
+        .finally(() => {
+          console.log("terminating connection");
+          connection.end();
+        });
+    })
+    .catch((error: any) => {
+      reject(error);
+    });
 };
 
 export { getResults };

@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from "uuid";
 
 export class User {
-  private _id!: string;
+  private _id: string;
   private _username: string;
   private _password: string;
 
