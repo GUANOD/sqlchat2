@@ -8,7 +8,7 @@ const Connect = async () =>
       host: "localhost",
       user: "root",
       password: "",
-      database: "chat",
+      database: "sqlchat2",
     });
 
     connection.connect((err: Error) => {
