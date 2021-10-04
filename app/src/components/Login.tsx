@@ -13,37 +13,6 @@ export default function Login() {
     setUsername("");
   };
 
-  const handleClick = (option: string) => {
-    switch (option) {
-      case "user":
-        userRef.current?.classList.add(styles.hover);
-        break;
-      case "pass":
-        passRef.current?.classList.add(styles.hover);
-        break;
-      default:
-        return;
-    }
-  };
-
-  const handleBlur = (option: string) => {
-    switch (option) {
-      case "user":
-        if (!username) {
-          userRef.current?.classList.remove(styles.hover);
-        }
-        break;
-      case "pass":
-        if (!password) {
-          passRef.current?.classList.remove(styles.hover);
-        }
-
-        break;
-      default:
-        return;
-    }
-  };
-
   return (
     <div className={styles.container}>
       <h2>Sign in</h2>
@@ -60,8 +29,10 @@ export default function Login() {
             id="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            onClick={() => handleClick("user")}
-            onBlur={() => handleBlur("user")}
+            onClick={() => userRef.current?.classList.add(styles.hover)}
+            onBlur={() =>
+              !username ? userRef.current?.classList.remove(styles.hover) : ""
+            }
           />
         </div>
         <div className={styles.field}>
@@ -76,8 +47,10 @@ export default function Login() {
             id="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            onClick={() => handleClick("pass")}
-            onBlur={() => handleBlur("pass")}
+            onClick={() => passRef.current?.classList.add(styles.hover)}
+            onBlur={() =>
+              !password ? passRef.current?.classList.remove(styles.hover) : ""
+            }
           />
         </div>
         <input type="submit" />
