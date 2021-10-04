@@ -8,14 +8,18 @@ export function verifyTokenHttp(
 ) {
   const bearerHeader = req.cookies.token;
   const token = bearerHeader && (<string>bearerHeader).split(" ")[1];
-  if (token == null) return res.sendStatus(401).send({ res: "Unauthorized" });
-  console.log(token);
+  if (token == null) {
+    res.status(401).send({ res: "Unauthorized" });
+    return;
+  }
   jwt.verify(
     token,
     process.env.ACCESS_TOKEN_SECRET,
     (err: Error, user: any) => {
       if (err) {
-        res.status(403).send({ res: "Unauthorized" });
+        console.error(err);
+        res.status(401).send({ res: "Unauthorized" });
+        return;
       } else {
         req.user = user.user;
         console.log("verified");

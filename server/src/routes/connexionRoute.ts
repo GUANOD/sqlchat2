@@ -37,7 +37,7 @@ router.post("/", async (req: Request, res: Response) => {
     const token: string = jwt.sign(
       { user: searchResult[0].id },
       `${process.env.ACCESS_TOKEN_SECRET}`,
-      { expiresIn: "1m" }
+      { expiresIn: "24h" }
     );
 
     //TODO: REFRESH TOKENS

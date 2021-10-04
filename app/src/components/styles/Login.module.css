@@ -1,0 +1,40 @@
+.container {
+  display: grid;
+  place-items: center;
+  height: 50%;
+  width: clamp(200px, 40%, 600px);
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  background-color: transparent;
+  border: none;
+  border-bottom: 2px solid red;
+  z-index: 10;
+}
+
+.input:focus,
+.input:active {
+  outline: none;
+  background-color: transparent;
+}
+
+.hover {
+  position: relative;
+  transform: translatey(-10px);
+  font-size: 10px;
+}
+
+.label {
+  position: relative;
+  top: 20px;
+}
+
+.hover,
+.label {
+  transition: all 0.1s linear;
+}
