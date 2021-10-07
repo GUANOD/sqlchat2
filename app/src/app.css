@@ -7,6 +7,27 @@ body * {
   font-family: "Noto Sans Display", sans-serif;
 }
 
+/* width */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  border-radius: 2px;
+  background: blanchedalmond;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgb(248, 222, 183);
+}
+
 .App {
   display: grid;
   place-items: center;

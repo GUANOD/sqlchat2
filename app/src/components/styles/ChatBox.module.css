@@ -1,0 +1,4 @@
+.chatBar {
+  grid-area: chatbox;
+  background-color: rgba(1, 13, 19, 0.1);
+}

@@ -1,0 +1,45 @@
+.chat {
+  display: grid;
+  grid-template-columns: 3fr 7fr;
+  grid-template-rows: 35fr 5fr;
+  grid-template-areas:
+    "sidebar chatbox"
+    "chatform chatform";
+  width: 90vw;
+  height: 90vh;
+  border-radius: 20px;
+  overflow: hidden;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.chatInput {
+  grid-area: chatform;
+}
+
+.chatInput * {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.chatInput form {
+  display: grid;
+  grid-template-columns: 8fr 2fr;
+  grid-template-areas: "input send";
+}
+
+.chatInput textarea {
+  grid-area: input;
+  resize: none;
+  outline: none;
+  padding: 5px 15px;
+  font-size: 20px;
+  font-weight: bold;
+}
+.chatInput input[type="submit"] {
+  grid-area: send;
+  font-size: 20px;
+  font-weight: bold;
+}

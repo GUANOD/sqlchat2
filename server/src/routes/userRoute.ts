@@ -36,7 +36,7 @@ router.post("/", verifyTokenHttp, async (req: Request, res: Response) => {
     }
   } catch (error: any) {
     console.log("sending error");
-    res.send({ error: error.message });
+    res.send({ err: error.message });
   }
 });
 

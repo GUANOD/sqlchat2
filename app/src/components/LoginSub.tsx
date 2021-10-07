@@ -1,12 +1,12 @@
 import React, { useState, useRef } from "react";
-import { post } from "../api/connexion";
+import { post } from "../api/APIconnexion";
 import styles from "./styles/Login.module.css";
 import { ADDRESS } from "../helpers/Address";
-import { setServers } from "dns";
 
 interface Props {
   err: string;
   setErr: Function;
+  setValidated: Function;
 }
 
 export default function LoginSub(props: Props) {
@@ -39,34 +39,31 @@ export default function LoginSub(props: Props) {
       return;
     }
 
-    //IF CREATE ACCOUNT
-    if (toggle) {
-      if (password !== passConfirm) {
-        props.setErr("Password confirmation is not equal to password.");
-        return;
-      }
+    try {
+      if (toggle) {
+        if (password !== passConfirm) {
+          props.setErr("Password confirmation is not equal to password.");
+          return;
+        }
 
-      try {
-        console.log(ADDRESS.postSub);
         const res: any = await post({ username, password }, ADDRESS.postSub);
-        console.log(res);
+
         props.setErr(res.res);
         setToggle(false);
-      } catch (error: any) {
-        props.setErr(error.error);
+      } else {
+        await post({ username, password }, ADDRESS.postLogin);
+        props.setValidated(true);
       }
-    } else {
-      try {
-        const res = await post({ username, password }, ADDRESS.postLogin);
-        console.log(res);
-      } catch (error: any) {
-        props.setErr(error.error);
-      }
+    } catch (error: any) {
+      props.setErr(error.err);
     }
 
     setPassword("");
     setUsername("");
     setPassConfirm("");
+    userRef.current?.blur();
+    passRef.current?.blur();
+    passConfRef.current?.blur();
   };
 
   return (

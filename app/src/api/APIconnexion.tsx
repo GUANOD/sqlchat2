@@ -4,6 +4,7 @@ interface Data {
 }
 
 export const post = (post: Data, address: string) => {
+  console.log("posting");
   return new Promise((resolve, reject) => {
     fetch(address, {
       method: "POST",
@@ -20,12 +21,28 @@ export const post = (post: Data, address: string) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        if (data.error) {
+        if (data.err) {
           reject(data);
           return;
         }
         resolve(data);
       })
       .catch((err) => reject(err));
+  });
+};
+
+export const get = (address: string) => {
+  return new Promise((resolve, reject) => {
+    fetch(address, {
+      method: "GET",
+      credentials: "include",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => (data.err ? reject(data) : resolve(data)))
+      .catch((data) => reject(data));
   });
 };

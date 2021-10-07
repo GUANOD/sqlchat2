@@ -4,6 +4,7 @@ import * as userDb from "../api/userDb";
 import { User } from "../models/User";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { verifyTokenHttp } from "../helpers/middleware/verifyToken";
 
 // LOGIN ROUTE
 
@@ -45,7 +46,7 @@ router.post("/", async (req: Request, res: Response) => {
     res.cookie("token", `bearer ${token}`, { httpOnly: true });
     res.send({ res: "Sent token" });
   } catch (error: any) {
-    res.send({ error: error.message });
+    res.send({ err: error.message });
   }
 });
 
@@ -76,8 +77,15 @@ router.post("/sub", async (req: Request, res: Response) => {
 
     res.send({ res: "User created" });
   } catch (error: any) {
-    res.send({ error: error.message });
+    console.log(error.message);
+    res.send({ err: error.message });
   }
+});
+
+//validate cookie route
+
+router.get("/cookie", verifyTokenHttp, (req: Request, res: Response) => {
+  res.send({ res: "Validated" });
 });
 
 export default router;

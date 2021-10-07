@@ -1,0 +1,51 @@
+.sideBar {
+  display: flex;
+  flex-direction: column;
+  place-items: center;
+  grid-area: sidebar;
+  max-height: 100%;
+  overflow: auto;
+  padding: 10px;
+  background-color: rgba(1, 13, 19, 0.5);
+}
+
+.contact {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  width: 90%;
+  height: 75px;
+  padding: 10px;
+  margin: 5px;
+  border-radius: 5px;
+  color: blanchedalmond;
+  font-weight: bold;
+  font-size: 20px;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.contact:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.clicked {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.clicked:hover {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+.contact img {
+  grid-area: pic;
+  width: 60px;
+  border-radius: 20%;
+}
+
+.details {
+  margin: 10px;
+  text-align: left;
+}
