@@ -30,7 +30,7 @@
   grid-template-areas: "input send";
 }
 
-.chatInput textarea {
+.chatInput input[type="text"] {
   grid-area: input;
   resize: none;
   outline: none;

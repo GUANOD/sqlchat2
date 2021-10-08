@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { get } from "../api/APIconnexion";
+import { simpleCredentialGet } from "../api/APIconnexion";
 import { ADDRESS } from "../helpers/Address";
 import { Contact } from "../models/Contact";
 import styles from "./styles/SideBar.module.css";
@@ -24,7 +24,7 @@ export default function SideBar({
   setChatting,
 }: SideBarProps) {
   useEffect(() => {
-    get(ADDRESS.getContacts)
+    simpleCredentialGet(ADDRESS.getContacts)
       .then((data: any) => {
         console.log(data);
         if (data.length) {

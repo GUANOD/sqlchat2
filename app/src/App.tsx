@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { get } from "./api/APIconnexion";
+import { simpleCredentialGet } from "./api/APIconnexion";
 import "./app.css";
 import Chat from "./components/Chat";
 import ErrorModal from "./components/ErrorModal";
@@ -10,25 +10,32 @@ import { ADDRESS } from "./helpers/Address";
 function App() {
   const [err, setErr] = useContext(ErrorContext);
   const [validated, setValidated] = useState<boolean>(false);
+  const [id, setId] = useState<string>("");
 
   //cause HTTP only cookie
   useEffect(() => {
     if (validated) return;
 
-    get(ADDRESS.cookieValidate)
-      .then(() => {
+    simpleCredentialGet(ADDRESS.cookieValidate)
+      .then((data: any) => {
+        setId(data.id);
         setValidated(true);
       })
-      .catch((data) => console.log("rejected", data));
+      .catch((data) => console.log("rejected", data.err));
   }, [validated]);
 
   return (
     <div className="App">
       {err ? <ErrorModal /> : ""}
       {validated ? (
-        <Chat />
+        <Chat id={id} />
       ) : (
-        <LoginSub err={err} setErr={setErr} setValidated={setValidated} />
+        <LoginSub
+          setId={setId}
+          err={err}
+          setErr={setErr}
+          setValidated={setValidated}
+        />
       )}
     </div>
   );

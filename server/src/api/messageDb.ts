@@ -8,7 +8,8 @@ export const getMessages = (sender_ID: string, receiver_ID: string) => {
   return new Promise((resolve, reject) => {
     const query = `
     SELECT * FROM message
-    WHERE sender_ID = "${sender_ID}" AND receiver_ID = "${receiver_ID}"; `;
+    WHERE sender_ID = "${sender_ID}" AND receiver_ID = "${receiver_ID}" OR sender_ID = "${receiver_ID}" AND receiver_ID = "${sender_ID}"
+    ORDER BY date ASC; `;
 
     getResults(query, resolve, reject);
   });

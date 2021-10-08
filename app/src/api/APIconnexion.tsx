@@ -31,7 +31,7 @@ export const post = (post: Data, address: string) => {
   });
 };
 
-export const get = (address: string) => {
+export const simpleCredentialGet = (address: string) => {
   return new Promise((resolve, reject) => {
     fetch(address, {
       method: "GET",

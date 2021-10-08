@@ -43,8 +43,8 @@ router.post("/", async (req: Request, res: Response) => {
 
     //TODO: REFRESH TOKENS
 
-    res.cookie("token", `bearer ${token}`, { httpOnly: true });
-    res.send({ res: "Sent token" });
+    res.cookie("token", `bearer ${token}`);
+    res.send({ res: "Sent token", id: searchResult[0].id });
   } catch (error: any) {
     res.send({ err: error.message });
   }
@@ -85,7 +85,7 @@ router.post("/sub", async (req: Request, res: Response) => {
 //validate cookie route
 
 router.get("/cookie", verifyTokenHttp, (req: Request, res: Response) => {
-  res.send({ res: "Validated" });
+  res.send({ res: "Validated", id: req.user });
 });
 
 export default router;

@@ -33,6 +33,7 @@ export function verifyTokenHttp(
 }
 
 export function verifyTokenSocket(socket: any, next: NextFunction) {
+  console.log(socket.handshake.query.id);
   if (socket.handshake.query && socket.handshake.query.token) {
     const bearerHeader = socket.handshake.query.token;
     const token = bearerHeader && (<string>bearerHeader).split(" ")[1];
@@ -41,9 +42,13 @@ export function verifyTokenSocket(socket: any, next: NextFunction) {
       token,
       process.env.ACCESS_TOKEN_SECRET,
       function (err: Error, user: any) {
-        if (err) return next(new Error("Authentication error"));
+        if (err) {
+          return next(new Error("Authentication error"));
+        }
         socket.decoded = user;
+        console.log("going next");
         next();
+        console.log("didnt go next");
       }
     );
   }

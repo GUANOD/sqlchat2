@@ -7,6 +7,7 @@ interface Props {
   err: string;
   setErr: Function;
   setValidated: Function;
+  setId: Function;
 }
 
 export default function LoginSub(props: Props) {
@@ -51,7 +52,8 @@ export default function LoginSub(props: Props) {
         props.setErr(res.res);
         setToggle(false);
       } else {
-        await post({ username, password }, ADDRESS.postLogin);
+        const data: any = await post({ username, password }, ADDRESS.postLogin);
+        props.setId(data.id);
         props.setValidated(true);
       }
     } catch (error: any) {

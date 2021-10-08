@@ -5,4 +5,5 @@ export const ADDRESS = {
   postSub: path + "sub",
   cookieValidate: path + "cookie",
   getContacts: path + "contact",
+  getMessages: path + "message",
 };

@@ -8,12 +8,13 @@ import { Message } from "../models/Message";
 
 //GET ALL MESSAGES BETWEEN USER
 
-router.get("/", verifyTokenHttp, async (req: Request, res: Response) => {
+router.post("/", verifyTokenHttp, async (req: Request, res: Response) => {
   try {
+    console.log(req.body);
     if (!req.body.receiver_ID) throw new Error("Unable to fetch messages");
 
     const messages = await getMessages(req.user, req.body.receiver_ID);
-    res.send({ [req.body.receiver_ID]: messages });
+    res.send({ res: messages });
   } catch (error: any) {
     res.send({ err: error.message });
   }
