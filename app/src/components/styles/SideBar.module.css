@@ -3,10 +3,16 @@
   flex-direction: column;
   place-items: center;
   grid-area: sidebar;
-  max-height: 100%;
-  overflow: auto;
-  padding: 10px;
+  height: 100%;
   background-color: rgba(1, 13, 19, 0.5);
+  overflow: hidden;
+}
+
+.contactWrap {
+  overflow: auto;
+  height: 90%;
+  width: 100%;
+  padding: 10px;
 }
 
 .contact {
@@ -18,14 +24,36 @@
   border: none;
   width: 90%;
   height: 75px;
-  padding: 10px;
   margin: 5px;
+  padding: 10px;
   border-radius: 5px;
   color: blanchedalmond;
   font-weight: bold;
   font-size: 20px;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
+}
+
+.contactForm {
+  height: 10%;
+  width: 100%;
+}
+
+.contactForm * {
+  font-size: 20px;
+  font-weight: bold;
+  border: none;
+  outline: none;
+}
+
+.contactForm input[type="submit"] {
+  width: 40%;
+  height: 100%;
+}
+
+.contactForm input[type="text"] {
+  width: 60%;
+  height: 100%;
 }
 
 .contact:hover {

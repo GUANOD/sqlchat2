@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { getMessages } from "../api/APIchat";
 import { useSocket } from "../context/SocketContext";
 import { ADDRESS } from "../helpers/Address";
@@ -7,6 +7,8 @@ import styles from "./styles/ChatBox.module.css";
 
 interface ChatBoxProps {
   chatting: string;
+  messages: Message[];
+  setMessages: Function;
 }
 
 interface MessageBubbleProps {
@@ -16,16 +18,25 @@ interface MessageBubbleProps {
   chatting: string;
 }
 
-export default function ChatBox({ chatting }: ChatBoxProps) {
-  const [messages, setMessages] = useState<Message[]>([]);
+export default function ChatBox({
+  chatting,
+  messages,
+  setMessages,
+}: ChatBoxProps) {
   const scroll = useRef<HTMLLIElement>(null);
   const socket = useSocket();
+  const scrollToBottom = () => {
+    scroll.current?.scrollIntoView();
+  };
+
+  useEffect(() => {
+    scrollToBottom();
+  }, [messages]);
 
   useEffect(() => {
     if (!chatting) return;
     getMessages(chatting, ADDRESS.getMessages)
       .then((data: any) => {
-        console.log(data.res);
         let messages: Message[] = data.res.map((message: any) => {
           return new Message(
             message.chat,
@@ -37,43 +48,16 @@ export default function ChatBox({ chatting }: ChatBoxProps) {
         setMessages(messages);
       })
       .catch((data) => console.log(data));
-  }, [chatting]);
-
-  const scrollToBottom = () => {
-    scroll.current?.scrollIntoView({ behavior: "smooth" });
-  };
-
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages]);
-
-  useEffect(() => {
-    if (!socket) return;
-    socket.on("newMessage", (data: any) => {
-      console.log(data);
-      if (data.sender_ID !== chatting) {
-        const formatDate: Message = new Message(
-          data.chat,
-          data.sender_ID,
-          data.receiver_ID,
-          new Date(data.date)
-        );
-        setMessages((prevMessages) => [...prevMessages, formatDate]);
-      }
-    });
-  }, [socket, chatting]);
-
-  //TODO: set the sent message in messages
-  //TODO: put socket routes in a file
-  // TODO: cleanup a bit
+  }, [chatting, setMessages]);
 
   return (
     <div className={styles.chatBar}>
-      {messages.length ? (
+      {messages?.length ? (
         <ul>
           {messages.map((message) => {
             return (
               <MessageBubble
+                key={Math.random()}
                 chatting={chatting}
                 chat={message.chat}
                 receiver_ID={message.receiver_ID}
